@@ -1,7 +1,7 @@
 package com.m3libea.flickster;
 
+import android.app.Activity;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.ListView;
 
@@ -18,7 +18,7 @@ import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
 
-public class MovieActivity extends AppCompatActivity {
+public class MovieActivity extends Activity {
 
     ArrayList<Movie> movies;
     MovieArrayAdapter movieAdapter;
@@ -28,6 +28,7 @@ public class MovieActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie);
+
 
         lvItems = (ListView) findViewById(R.id.lvmovies);
         movies = new ArrayList<>();

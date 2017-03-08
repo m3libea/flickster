@@ -3,16 +3,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/darkgrey">
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/ivMovie"
         tools:src="@mipmap/ic_launcher"
-        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/tvTitle" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        tools:text="Arrival"
+        android:id="@+id/tvTitle"
+        android:textColor="@color/white"
+        android:layout_marginTop="14dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignLeft="@+id/tvOverview"
+        android:layout_alignStart="@+id/tvOverview"
+        android:paddingLeft="10dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -20,19 +34,10 @@
         tools:text="Taking place after alien crafts land around the world, an expert linguist is recruited by the military to determine whether they come in peace or are a threat."
         android:id="@+id/tvOverview"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:layout_marginLeft="35dp"
-        android:layout_marginStart="35dp"
+        android:textColor="@color/white"
+        android:textSize="8sp"
+        android:padding="10dp"
         android:layout_below="@+id/tvTitle"
         android:layout_toRightOf="@+id/ivMovie"
         android:layout_toEndOf="@+id/ivMovie" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        tools:text="Arrival"
-        android:id="@+id/tvTitle"
-        android:layout_alignParentTop="true"
-        android:layout_alignLeft="@+id/tvOverview"
-        android:layout_alignStart="@+id/tvOverview" />
 </RelativeLayout>
