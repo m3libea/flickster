@@ -6,14 +6,27 @@
     android:layout_height="match_parent"
     android:background="@color/darkgrey">
 
-    <ImageView
+    <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/ivMovie"
-        tools:src="@mipmap/ic_launcher"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignTop="@+id/tvTitle" />
+        android:layout_alignTop="@+id/tvTitle"
+        android:id="@+id/flayout">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            tools:src="@mipmap/ic_launcher"
+            android:id="@+id/ivMovie"/>
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            tools:src="@mipmap/ic_launcher"
+            android:layout_gravity="center"
+            android:id="@+id/ivplay" />
+    </FrameLayout>
 
     <TextView
         android:layout_width="match_parent"
@@ -38,6 +51,6 @@
         android:textSize="8sp"
         android:padding="10dp"
         android:layout_below="@+id/tvTitle"
-        android:layout_toRightOf="@+id/ivMovie"
-        android:layout_toEndOf="@+id/ivMovie" />
+        android:layout_toRightOf="@+id/flayout"
+        android:layout_toEndOf="@+id/flayout" />
 </RelativeLayout>

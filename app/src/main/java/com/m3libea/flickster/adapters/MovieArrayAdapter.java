@@ -53,6 +53,8 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
 
         //find the image view
         ImageView ivImage = (ImageView) convertView.findViewById(R.id.ivMovie);
+        ImageView ivPlay= (ImageView) convertView.findViewById(R.id.ivplay);
+
 
         //clear out image from convertView
         ivImage.setImageResource(0);
@@ -67,26 +69,23 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
             tvOverview.setText(movie.getOverview());
         }
 
-        if (orientation == Configuration.ORIENTATION_PORTRAIT) {
-            if (getItemViewType(position) == 0){
-                Picasso.with(getContext()).load(movie.getBackdropPath())
-                        .transform(new RoundedCornersTransformation(10, 10))
-                        .placeholder(R.drawable.syncph)
-                        .error(R.drawable.errorph)
-                        .into(ivImage);
-            }else{
-                Picasso.with(getContext()).load(movie.getPosterPath())
-                        .transform(new RoundedCornersTransformation(10, 10))
-                        .placeholder(R.drawable.syncph)
-                        .error(R.drawable.errorph)
-                        .into(ivImage);
-            }
-        } else if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+        if (isPopular(movie) == 0){
             Picasso.with(getContext()).load(movie.getBackdropPath())
+                    .transform(new RoundedCornersTransformation(10, 10))
+                    .placeholder(R.drawable.syncph)
+                    .error(R.drawable.errorph)
+                    .into(ivImage);
+            Picasso.with(getContext()).load(R.drawable.play)
+                    .into(ivPlay);
+
+        }else{
+            Picasso.with(getContext()).load(movie.getPosterPath())
+                    .transform(new RoundedCornersTransformation(10, 10))
                     .placeholder(R.drawable.syncph)
                     .error(R.drawable.errorph)
                     .into(ivImage);
         }
+
 
         return convertView;
 

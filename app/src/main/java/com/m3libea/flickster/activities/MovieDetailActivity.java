@@ -34,13 +34,15 @@ public class MovieDetailActivity extends Activity {
         setContentView(R.layout.activity_detailed_movie);
 
         ButterKnife.bind(this);
+
+        //Change stars color
+        rbStars.setRating(getIntent().getExtras().getInt("stars")/2);
         LayerDrawable stars = (LayerDrawable) rbStars.getProgressDrawable();
         stars.getDrawable(2).setColorFilter(Color.YELLOW, PorterDuff.Mode.SRC_ATOP);
 
         tvTitle.setText(getIntent().getExtras().getString("title"));
         tvSynopsis.setText(getIntent().getExtras().getString("overview"));
         tvRelease.setText(getIntent().getExtras().getString("release"));
-        rbStars.setRating(getIntent().getExtras().getInt("stars")/2);
 
         Picasso.with(this).load(getIntent().getExtras().getString("image"))
                 .placeholder(R.drawable.syncph)
