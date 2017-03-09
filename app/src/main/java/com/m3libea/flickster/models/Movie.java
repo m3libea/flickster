@@ -17,9 +17,14 @@ public class Movie {
     String overview;
     String backdropPath;
     int stars;
+    String releaseDate;
 
     public String getPosterPath() {
         return String.format("https://image.tmdb.org/t/p/w342/%s", posterPath);
+    }
+
+    public String getReleaseDate() {
+        return releaseDate;
     }
 
     public String getOriginalTitle() {
@@ -44,6 +49,7 @@ public class Movie {
         this.overview = jsonObject.getString("overview");
         this.backdropPath = jsonObject.getString("backdrop_path");
         this.stars = jsonObject.getInt("vote_average");
+        this.releaseDate = jsonObject.getString("release_date");
     }
 
     public static ArrayList<Movie> fromJSONArray(JSONArray array) {
