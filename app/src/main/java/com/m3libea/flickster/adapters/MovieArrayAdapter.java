@@ -3,6 +3,7 @@ package com.m3libea.flickster.adapters;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,8 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
 
 /**
@@ -23,6 +26,11 @@ import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
  */
 
 public class MovieArrayAdapter extends ArrayAdapter<Movie> {
+
+    @BindView(R.id.ivMovie) ImageView ivImage;
+    @BindView(R.id.ivplay) ImageView ivPlay;
+    @Nullable @BindView(R.id.tvTitle) TextView tvTitle;
+    @Nullable @BindView(R.id.tvOverview) TextView tvOverview;
 
     public MovieArrayAdapter(Context context, List<Movie> movies){
         super(context, android.R.layout.simple_list_item_1, movies);
@@ -35,7 +43,7 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
 
     @Override
     public int getItemViewType(int position) {
-        return isPopular(getItem(position));
+        return isPopular(getItem(position))? 0: 1;
     }
 
     @NonNull
@@ -51,10 +59,7 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
             convertView = getInflatedLayoutForType(type);
         }
 
-        //find the image view
-        ImageView ivImage = (ImageView) convertView.findViewById(R.id.ivMovie);
-        ImageView ivPlay= (ImageView) convertView.findViewById(R.id.ivplay);
-
+        ButterKnife.bind(this, convertView);
 
         //clear out image from convertView
         ivImage.setImageResource(0);
@@ -62,19 +67,18 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
         int orientation = getContext().getResources().getConfiguration().orientation;
 
         if(getItemViewType(position) == 1 || orientation == Configuration.ORIENTATION_LANDSCAPE){
-            TextView tvTitle = (TextView) convertView.findViewById(R.id.tvTitle);
-            TextView tvOverview = (TextView) convertView.findViewById(R.id.tvOverview);
-            //Populate the data
             tvTitle.setText(movie.getOriginalTitle());
             tvOverview.setText(movie.getOverview());
         }
 
-        if (isPopular(movie) == 0){
+        if (isPopular(movie)){
+            //Insert image
             Picasso.with(getContext()).load(movie.getBackdropPath())
                     .transform(new RoundedCornersTransformation(10, 10))
                     .placeholder(R.drawable.syncph)
                     .error(R.drawable.errorph)
                     .into(ivImage);
+            //Insert play button
             Picasso.with(getContext()).load(R.drawable.play)
                     .into(ivPlay);
 
@@ -91,12 +95,8 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
 
     }
 
-    private int isPopular(Movie movie) {
-        if(movie.getStars() > 5){
-            return 0; //popular
-        }else{
-            return 1; //no popular
-        }
+    private boolean isPopular(Movie movie) {
+        return (movie.getStars() > 5);
     }
 
     private View getInflatedLayoutForType(int type) {
