@@ -15,6 +15,7 @@ import com.m3libea.flickster.models.Movie;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.parceler.Parcels;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -57,21 +58,11 @@ public class MovieActivity extends Activity {
                 Intent i = null;
                 if (m.getStars() > 5) {
                     i = new Intent(MovieActivity.this, TrailerActivity.class);
-
                     i.putExtra("play", true);
-                    i.putExtra("id", m.getID());
-
                 }else {
                     i = new Intent(MovieActivity.this, MovieDetailActivity.class);
-
-                    i.putExtra("title", movies.get(position).getOriginalTitle());
-                    i.putExtra("overview", movies.get(position).getOverview());
-                    i.putExtra("image", movies.get(position).getBackdropPath());
-                    i.putExtra("release", movies.get(position).getReleaseDate());
-                    i.putExtra("stars", movies.get(position).getStars());
-                    i.putExtra("id", m.getID());
-
                 }
+                i.putExtra("movie", Parcels.wrap(m));
                 startActivity(i);
             }
         });

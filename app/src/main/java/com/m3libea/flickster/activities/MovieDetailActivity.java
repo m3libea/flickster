@@ -11,7 +11,10 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.m3libea.flickster.R;
+import com.m3libea.flickster.models.Movie;
 import com.squareup.picasso.Picasso;
+
+import org.parceler.Parcels;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -32,7 +35,7 @@ public class MovieDetailActivity extends Activity {
     @BindView(R.id.ivplay) ImageView ivPlay;
 
 
-    int movieID;
+    Movie movie;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,19 +43,18 @@ public class MovieDetailActivity extends Activity {
 
         ButterKnife.bind(this);
 
+        movie = Parcels.unwrap(getIntent().getParcelableExtra("movie"));
+
         //Change stars color
-        rbStars.setRating(getIntent().getExtras().getInt("stars")/2);
+        rbStars.setRating(movie.getStars()/2);
         LayerDrawable stars = (LayerDrawable) rbStars.getProgressDrawable();
         stars.getDrawable(2).setColorFilter(Color.YELLOW, PorterDuff.Mode.SRC_ATOP);
 
-        tvTitle.setText(getIntent().getExtras().getString("title"));
-        tvSynopsis.setText(getIntent().getExtras().getString("overview"));
-        tvRelease.setText(getIntent().getExtras().getString("release"));
+        tvTitle.setText(movie.getOriginalTitle());
+        tvSynopsis.setText(movie.getOverview());
+        tvRelease.setText(movie.getReleaseDate());
 
-        movieID = getIntent().getExtras().getInt("id");
-
-
-        Picasso.with(this).load(getIntent().getExtras().getString("image"))
+        Picasso.with(this).load(movie.getBackdropPath())
                 .placeholder(R.drawable.syncph)
                 .error(R.drawable.errorph)
                 .into(ivPoster);
@@ -65,7 +67,7 @@ public class MovieDetailActivity extends Activity {
 
     public void playYoutube(){
         Intent i = new Intent(MovieDetailActivity.this, TrailerActivity.class);
-        i.putExtra("id", movieID);
+        i.putExtra("movie", Parcels.wrap(movie));
         startActivity(i);
     }
 }

@@ -11,10 +11,12 @@ import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerView;
 import com.m3libea.flickster.R;
+import com.m3libea.flickster.models.Movie;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.parceler.Parcels;
 
 import java.io.IOException;
 
@@ -49,8 +51,10 @@ public class TrailerActivity extends YouTubeBaseActivity {
             Bundle bundle = ai.metaData;
             youtubeApiKey = bundle.getString("YOUTUBE_API_KEY");
 
+            Movie movie = Parcels.unwrap(getIntent().getParcelableExtra("movie"));
+
             client = new OkHttpClient();
-            movieId = getIntent().getIntExtra("id", -1);
+            movieId = movie.getID();
             play = getIntent().getBooleanExtra("play", false);
 
             youTubePlayerView.initialize(youtubeApiKey,

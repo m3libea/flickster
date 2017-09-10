@@ -3,6 +3,7 @@ package com.m3libea.flickster.models;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.parceler.Parcel;
 
 import java.util.ArrayList;
 
@@ -10,6 +11,7 @@ import java.util.ArrayList;
  * Created by m3libea on 3/7/17.
  */
 
+@Parcel
 public class Movie {
 
     String posterPath;
@@ -21,6 +23,9 @@ public class Movie {
 
     int ID;
 
+    public Movie(){
+
+    }
     public String getPosterPath() {
         return String.format("https://image.tmdb.org/t/p/w342/%s", posterPath);
     }
