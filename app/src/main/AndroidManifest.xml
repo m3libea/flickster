@@ -9,6 +9,9 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <meta-data android:name="YOUTUBE_API_KEY" android:value="AIzaSyB9iob-xfu_6UKBKVcT1foyYpCWQ8fxgzQ" />
+
         <activity android:name=".activities.MovieActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
