@@ -69,6 +69,8 @@ public class MovieActivity extends Activity {
                     i.putExtra("image", movies.get(position).getBackdropPath());
                     i.putExtra("release", movies.get(position).getReleaseDate());
                     i.putExtra("stars", movies.get(position).getStars());
+                    i.putExtra("id", m.getID());
+
                 }
                 startActivity(i);
             }
