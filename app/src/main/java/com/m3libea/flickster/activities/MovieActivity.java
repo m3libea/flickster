@@ -51,13 +51,27 @@ public class MovieActivity extends Activity {
         lvItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent i = new Intent(MovieActivity.this, MovieDetailActivity.class);
 
-                i.putExtra("title", movies.get(position).getOriginalTitle());
-                i.putExtra("overview", movies.get(position).getOverview());
-                i.putExtra("image", movies.get(position).getBackdropPath());
-                i.putExtra("release", movies.get(position).getReleaseDate());
-                i.putExtra("stars", movies.get(position).getStars());
+                Movie m = movies.get(position);
+
+                Intent i = null;
+                if (m.getStars() > 5) {
+                    i = new Intent(MovieActivity.this, TrailerActivity.class);
+
+                    i.putExtra("play", true);
+                    i.putExtra("id", m.getID());
+
+                }else {
+                    i = new Intent(MovieActivity.this, MovieDetailActivity.class);
+
+                    i.putExtra("title", movies.get(position).getOriginalTitle());
+                    i.putExtra("overview", movies.get(position).getOverview());
+                    i.putExtra("image", movies.get(position).getBackdropPath());
+                    i.putExtra("release", movies.get(position).getReleaseDate());
+                    i.putExtra("stars", movies.get(position).getStars());
+                    i.putExtra("id", m.getID());
+
+                }
                 startActivity(i);
             }
         });
