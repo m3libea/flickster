@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -58,12 +59,18 @@ public class MovieDetailActivity extends Activity {
                 .placeholder(R.drawable.syncph)
                 .error(R.drawable.errorph)
                 .into(ivPoster);
-        Picasso.with(this).load(R.drawable.play)
-                .into(ivPlay);
+
+        if (movie.getYoutubeKey() != null){
+            Picasso.with(this).load(R.drawable.play)
+                    .into(ivPlay);
+        }else{
+            ivPlay.setVisibility(View.GONE);
+        }
+
 
     }
 
-    @OnClick({ R.id.ivplay, R.id.flayout })
+    @OnClick({ R.id.ivplay})
 
     public void playYoutube(){
         Intent i = new Intent(MovieDetailActivity.this, TrailerActivity.class);
