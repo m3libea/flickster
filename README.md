@@ -33,7 +33,7 @@ The following **bonus** features are implemented:
 
 The following **additional** features are implemented:
 
-* [ ] List anything else that you can get done to improve the app functionality!
+* [X] Use of Parceler library
 
 
 ## Video Walkthrough
@@ -47,6 +47,8 @@ Here's a walkthrough of implemented user stories:
 
 - [OkHttp](http://guides.codepath.com/android/Using-OkHttp)
 - [Picasso](http://square.github.io/picasso/) - Image loading and caching library for Android
+- [Butterknife](http://guides.codepath.com/android/Reducing-View-Boilerplate-with-Butterknife) - Annotation library to reduce boilerplate code.
+- [Parceler] (http://guides.codepath.com/android/Using-Parceler)
 
 ## License
 
