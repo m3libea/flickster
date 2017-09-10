@@ -2,7 +2,7 @@
 
 Flickster shows the latest movies currently playing in theaters. The app utilizes the Movie Database API to display images and basic information about these movies to the user.
 
-Time spent: **X** hours spent in total
+Time spent: **16** hours spent in total
 
 ## User Stories
 
@@ -18,6 +18,8 @@ The following **optional** features are implemented:
 
 * [X] Display a nice default [placeholder graphic](http://guides.codepath.com/android/Displaying-Images-with-the-Picasso-Library#configuring-picasso) for each image during loading.
 * [X] Improved the user interface through styling and coloring.
+  * [X] Dark theme
+  * [X] Personalized icon for application
 
 The following **bonus** features are implemented:
 
@@ -48,7 +50,7 @@ Here's a walkthrough of implemented user stories:
 - [OkHttp](http://guides.codepath.com/android/Using-OkHttp)
 - [Picasso](http://square.github.io/picasso/) - Image loading and caching library for Android
 - [Butterknife](http://guides.codepath.com/android/Reducing-View-Boilerplate-with-Butterknife) - Annotation library to reduce boilerplate code.
-- [Parceler] (http://guides.codepath.com/android/Using-Parceler)
+- [Parceler](http://guides.codepath.com/android/Using-Parceler)
 
 ## License
 
