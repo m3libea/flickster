@@ -18,6 +18,8 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -29,12 +31,14 @@ public class TrailerActivity extends YouTubeBaseActivity {
     OkHttpClient client;
     boolean play;
 
-    YouTubePlayerView youTubePlayerView;
+    @BindView(R.id.player) YouTubePlayerView youTubePlayerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trailer);
+
+        ButterKnife.bind(this);
 
         String youtubeApiKey;
         final int movieId;
@@ -48,8 +52,6 @@ public class TrailerActivity extends YouTubeBaseActivity {
             client = new OkHttpClient();
             movieId = getIntent().getIntExtra("id", -1);
             play = getIntent().getBooleanExtra("play", false);
-
-            youTubePlayerView = (YouTubePlayerView) findViewById(R.id.player);
 
             youTubePlayerView.initialize(youtubeApiKey,
                     new YouTubePlayer.OnInitializedListener() {
