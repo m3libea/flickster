@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 24
-    buildToolsVersion "24.0.2"
+    buildToolsVersion '25.0.0'
     defaultConfig {
         applicationId "com.m3libea.flickster"
         minSdkVersion 16
@@ -36,6 +36,5 @@ dependencies {
 
     //Okhttp
     compile 'com.squareup.okhttp3:okhttp:3.6.0'
-
 
 }
