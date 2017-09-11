@@ -1,8 +1,8 @@
 package com.m3libea.flickster.activities;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -28,7 +28,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class MovieActivity extends Activity {
+public class MovieActivity extends AppCompatActivity {
 
     ArrayList<Movie> movies;
     MovieArrayAdapter movieAdapter;
@@ -38,6 +38,9 @@ public class MovieActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie);
+
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setIcon(R.mipmap.ic_launcher);
 
         setElements();
         apiRequest();

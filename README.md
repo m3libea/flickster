@@ -20,6 +20,7 @@ The following **optional** features are implemented:
 * [X] Improved the user interface through styling and coloring.
   * [X] Dark theme
   * [X] Personalized icon for application
+  * [X] Action Bar using app icon
 
 The following **bonus** features are implemented:
 

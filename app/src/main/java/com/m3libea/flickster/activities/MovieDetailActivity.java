@@ -1,11 +1,11 @@
 package com.m3libea.flickster.activities;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
+import android.support.v4.content.res.ResourcesCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RatingBar;
@@ -26,11 +26,9 @@ import butterknife.OnClick;
  * Created by m3libea on 3/8/17.
  */
 
-public class MovieDetailActivity extends Activity {
+public class MovieDetailActivity extends AppCompatActivity {
 
-    @BindView(R.id.tvTitle) TextView tvTitle;
     @BindView(R.id.tvSynopsis) TextView tvSynopsis;
-    @BindView(R.id.tvRDate) TextView tvRelease;
     @BindView(R.id.ivMovie) ImageView ivPoster;
     @BindView(R.id.rbStars) RatingBar rbStars;
     @BindView(R.id.ivplay) ImageView ivPlay;
@@ -46,14 +44,14 @@ public class MovieDetailActivity extends Activity {
 
         movie = Parcels.unwrap(getIntent().getParcelableExtra("movie"));
 
+        getSupportActionBar().setTitle(movie.getOriginalTitle());
+
         //Change stars color
         rbStars.setRating(movie.getStars()/2);
         LayerDrawable stars = (LayerDrawable) rbStars.getProgressDrawable();
-        stars.getDrawable(2).setColorFilter(Color.YELLOW, PorterDuff.Mode.SRC_ATOP);
+        stars.getDrawable(2).setColorFilter(ResourcesCompat.getColor(getResources(), R.color.colorPrimary, null), PorterDuff.Mode.SRC_ATOP);
 
-        tvTitle.setText(movie.getOriginalTitle());
         tvSynopsis.setText(movie.getOverview());
-        tvRelease.setText(movie.getReleaseDate());
 
         Picasso.with(this).load(movie.getBackdropPath())
                 .placeholder(R.drawable.syncph)
