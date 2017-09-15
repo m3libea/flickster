@@ -88,19 +88,16 @@ public class MovieDetailActivity extends AppCompatActivity {
                     if (youtubeTrailerArray.length() > 0) {
                         JSONObject trailer= (JSONObject) youtubeTrailerArray.get(0);
                         movie.setYoutubeKey(trailer.getString("key"));
-
-                        MovieDetailActivity.this.runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                if (movie.getYoutubeKey() == ""){
-                                    ivPlay.setVisibility(View.GONE);
-                                }
-                            }
-                        });
-
-
-
                     }
+
+                    MovieDetailActivity.this.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (movie.getYoutubeKey() == "" || movie.getYoutubeKey() == null){
+                                ivPlay.setVisibility(View.GONE);
+                            }
+                        }
+                    });
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

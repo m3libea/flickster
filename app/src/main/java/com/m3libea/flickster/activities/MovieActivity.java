@@ -88,7 +88,6 @@ public class MovieActivity extends AppCompatActivity {
             public void onResponse(Call call, final Response response) throws IOException {
                 try {
                     String responseData = response.body().string();
-                    Log.d("MovieActivity", responseData);
                     JSONObject jsonObject = new JSONObject(responseData);
                     JSONArray movieJsonResults = jsonObject.getJSONArray("results");
                     movies.addAll(Movie.fromJSONArray(movieJsonResults));

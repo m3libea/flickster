@@ -21,6 +21,8 @@ The following **optional** features are implemented:
   * [X] Dark theme
   * [X] Personalized icon for application
   * [X] Action Bar using app icon
+  * [X] Gradient as background
+  * [X] Movie title on the action bar for each detailed view 
 
 The following **bonus** features are implemented:
 

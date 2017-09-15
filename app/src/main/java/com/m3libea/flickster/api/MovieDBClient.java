@@ -1,7 +1,5 @@
 package com.m3libea.flickster.api;
 
-import android.util.Log;
-
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -27,7 +25,6 @@ public class MovieDBClient {
     public void getNowPlaying(Callback cb) {
 
         String url = String.format("%smovie/now_playing?api_key=%s",baseURL, key);
-        Log.d("MovieClient", url);
         Request request = new Request.Builder()
                 .url(url)
                 .build();
