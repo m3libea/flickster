@@ -92,9 +92,10 @@ public class MovieDetailActivity extends AppCompatActivity {
                         MovieDetailActivity.this.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                if (movie.getYoutubeKey() != ""){
-                                    ivPlay.setVisibility(View.VISIBLE);
-                                }                            }
+                                if (movie.getYoutubeKey() == ""){
+                                    ivPlay.setVisibility(View.GONE);
+                                }
+                            }
                         });
 
 
