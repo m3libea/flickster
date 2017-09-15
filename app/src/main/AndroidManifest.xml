@@ -9,9 +9,11 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:name=".FlicksterApplication">
 
         <meta-data android:name="YOUTUBE_API_KEY" android:value="AIzaSyB9iob-xfu_6UKBKVcT1foyYpCWQ8fxgzQ" />
+        <meta-data android:name="MOVIEDB_API_KEY" android:value="39680a8f0ff3902bf007bf15ca2503e2" />
 
         <activity android:name=".activities.MovieActivity">
             <intent-filter>

@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/backgroundDark">
+    android:background="@drawable/gradient">
 
     <FrameLayout
         android:layout_width="wrap_content"
@@ -17,13 +17,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
-            android:maxHeight="200dp"
+            android:maxHeight="@dimen/maxheight"
             tools:src="@mipmap/ic_launcher"
             android:id="@+id/ivMovie"/>
 
         <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="@dimen/play_button_size"
+            android:layout_height="@dimen/play_button_size"
             tools:src="@mipmap/ic_launcher"
             android:layout_gravity="center"
             android:id="@+id/ivplay" />
@@ -36,7 +36,6 @@
         tools:text="Arrival"
         android:id="@+id/tvTitle"
         android:textColor="@color/white"
-        android:layout_marginTop="14dp"
         android:layout_alignParentTop="true"
         android:layout_alignLeft="@+id/tvOverview"
         android:layout_alignStart="@+id/tvOverview"

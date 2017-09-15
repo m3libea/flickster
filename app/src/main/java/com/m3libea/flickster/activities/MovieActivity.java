@@ -8,8 +8,10 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.m3libea.flickster.FlicksterApplication;
 import com.m3libea.flickster.R;
 import com.m3libea.flickster.adapters.MovieArrayAdapter;
+import com.m3libea.flickster.api.MovieDBClient;
 import com.m3libea.flickster.models.Movie;
 
 import org.json.JSONArray;
@@ -24,11 +26,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import okhttp3.Call;
 import okhttp3.Callback;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
 import okhttp3.Response;
 
 public class MovieActivity extends AppCompatActivity {
+
+    private MovieDBClient api;
 
     ArrayList<Movie> movies;
     MovieArrayAdapter movieAdapter;
@@ -42,8 +44,12 @@ public class MovieActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setIcon(R.mipmap.ic_launcher);
 
+        api = ((FlicksterApplication)this.getApplication()).getApi();
+
         setElements();
         apiRequest();
+        Log.d("Debug", movies.toString());
+
     }
 
     private void setElements() {
@@ -72,15 +78,7 @@ public class MovieActivity extends AppCompatActivity {
     }
 
     private void apiRequest() {
-        String url = "https://api.themoviedb.org/3/movie/now_playing?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed";
-
-        OkHttpClient client = new OkHttpClient();
-
-        Request request = new Request.Builder()
-                .url(url)
-                .build();
-
-        client.newCall(request).enqueue(new Callback() {
+        api.getNowPlaying(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 e.printStackTrace();
@@ -90,17 +88,18 @@ public class MovieActivity extends AppCompatActivity {
             public void onResponse(Call call, final Response response) throws IOException {
                 try {
                     String responseData = response.body().string();
+                    Log.d("MovieActivity", responseData);
                     JSONObject jsonObject = new JSONObject(responseData);
                     JSONArray movieJsonResults = jsonObject.getJSONArray("results");
                     movies.addAll(Movie.fromJSONArray(movieJsonResults));
 
                     MovieActivity.this.runOnUiThread(new Runnable() {
-                         @Override
-                         public void run() {
-                             movieAdapter.notifyDataSetChanged();
-                         }
-                     });
-                    Log.d("Debug", movies.toString());
+                        @Override
+                        public void run() {
+                            movieAdapter.notifyDataSetChanged();
+                        }
+                    });
+
                 } catch (JSONException e) {
                     e.printStackTrace();
 

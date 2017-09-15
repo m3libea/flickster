@@ -5,14 +5,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.parceler.Parcel;
 
-import java.io.IOException;
 import java.util.ArrayList;
-
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 
 /**
  * Created by m3libea on 3/7/17.
@@ -27,6 +20,7 @@ public class Movie {
     String backdropPath;
     int stars;
     String releaseDate;
+
     String youtubeKey;
 
     int ID;
@@ -41,6 +35,9 @@ public class Movie {
 
     public String getReleaseDate() {
         return releaseDate;
+    }
+    public void setYoutubeKey(String youtubeKey) {
+        this.youtubeKey = youtubeKey;
     }
 
     public String getOriginalTitle() {
@@ -73,7 +70,6 @@ public class Movie {
         this.stars = jsonObject.getInt("vote_average");
         this.releaseDate = jsonObject.getString("release_date");
         this.ID = jsonObject.getInt("id");
-        this.getTrailerAPI();
 
     }
 
@@ -91,39 +87,4 @@ public class Movie {
         return results;
     }
 
-    public void getTrailerAPI() {
-        String url = String.format("https://api.themoviedb.org/3/movie/%d/videos?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed", ID);
-        Request request = new Request.Builder()
-                .url(url)
-                .build();
-
-        OkHttpClient client = new OkHttpClient();
-
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onResponse(Call call, final Response response) throws IOException {
-                JSONArray youtubeTrailerArray = null;
-
-                try {
-                    String data = response.body().string();
-                    JSONObject json = new JSONObject(data);
-                    youtubeTrailerArray = json.getJSONArray("results");
-
-                    if (youtubeTrailerArray.length() > 0) {
-                        JSONObject trailer= (JSONObject) youtubeTrailerArray.get(0);
-                        youtubeKey = trailer.getString("key");
-
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onFailure(Call call, IOException e) {
-                e.printStackTrace();
-            }
-        });
-
-    }
 }

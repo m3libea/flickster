@@ -11,15 +11,25 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.m3libea.flickster.FlicksterApplication;
 import com.m3libea.flickster.R;
+import com.m3libea.flickster.api.MovieDBClient;
 import com.m3libea.flickster.models.Movie;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.parceler.Parcels;
+
+import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 
 /**
@@ -33,6 +43,7 @@ public class MovieDetailActivity extends AppCompatActivity {
     @BindView(R.id.rbStars) RatingBar rbStars;
     @BindView(R.id.ivplay) ImageView ivPlay;
 
+    private MovieDBClient api;
 
     Movie movie;
     @Override
@@ -58,14 +69,48 @@ public class MovieDetailActivity extends AppCompatActivity {
                 .error(R.drawable.errorph)
                 .into(ivPoster);
 
-        if (movie.getYoutubeKey() != null){
-            Picasso.with(this).load(R.drawable.play)
-                    .into(ivPlay);
-        }else{
-            ivPlay.setVisibility(View.GONE);
-        }
+        Picasso.with(MovieDetailActivity.this).load(R.drawable.play)
+                .into(ivPlay);
+
+        api = ((FlicksterApplication)this.getApplication()).getApi();
 
 
+        api.getTrailer(movie.getID(),new Callback() {
+            @Override
+            public void onResponse(Call call, final Response response) throws IOException {
+                JSONArray youtubeTrailerArray = null;
+
+                try {
+                    String data = response.body().string();
+                    JSONObject json = new JSONObject(data);
+                    youtubeTrailerArray = json.getJSONArray("results");
+
+                    if (youtubeTrailerArray.length() > 0) {
+                        JSONObject trailer= (JSONObject) youtubeTrailerArray.get(0);
+                        movie.setYoutubeKey(trailer.getString("key"));
+
+                        MovieDetailActivity.this.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (movie.getYoutubeKey() == ""){
+                                    ivPlay.setVisibility(View.GONE);
+                                }
+                            }
+                        });
+
+
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     @OnClick({ R.id.ivplay})
@@ -75,4 +120,5 @@ public class MovieDetailActivity extends AppCompatActivity {
         i.putExtra("movie", Parcels.wrap(movie));
         startActivity(i);
     }
+
 }

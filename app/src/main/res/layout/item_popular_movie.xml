@@ -2,9 +2,11 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="#80000000">
 
     <FrameLayout
+        android:id="@+id/flayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -15,16 +17,16 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:maxHeight="200dp"
+            android:maxHeight="@dimen/maxheight"
             android:adjustViewBounds="true"
             tools:src="@mipmap/ic_launcher"
             android:id="@+id/ivMovie"/>
 
         <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="@dimen/play_button_size"
+            android:layout_height="@dimen/play_button_size"
             tools:src="@mipmap/ic_launcher"
             android:layout_gravity="center"
-            android:id="@+id/ivplay" />
+            android:id="@+id/ivplay"/>
     </FrameLayout>
 </RelativeLayout>
