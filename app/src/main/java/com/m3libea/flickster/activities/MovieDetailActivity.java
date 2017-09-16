@@ -45,17 +45,25 @@ public class MovieDetailActivity extends AppCompatActivity {
 
     private MovieDBClient api;
 
-    Movie movie;
+    private Movie movie;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detailed_movie);
 
-        ButterKnife.bind(this);
-
         movie = Parcels.unwrap(getIntent().getParcelableExtra("movie"));
 
         getSupportActionBar().setTitle(movie.getOriginalTitle());
+
+        api = ((FlicksterApplication)this.getApplication()).getApi();
+
+        setupView();
+        fetchTrailer();
+    }
+
+    private void setupView() {
+        ButterKnife.bind(this);
 
         //Change stars color
         rbStars.setRating(movie.getStars()/2);
@@ -71,10 +79,9 @@ public class MovieDetailActivity extends AppCompatActivity {
 
         Picasso.with(MovieDetailActivity.this).load(R.drawable.play)
                 .into(ivPlay);
+    }
 
-        api = ((FlicksterApplication)this.getApplication()).getApi();
-
-
+    private void fetchTrailer(){
         api.getTrailer(movie.getID(),new Callback() {
             @Override
             public void onResponse(Call call, final Response response) throws IOException {
@@ -99,19 +106,20 @@ public class MovieDetailActivity extends AppCompatActivity {
                         }
                     });
                 } catch (JSONException e) {
+                    // TODO handle error with snackbar
                     e.printStackTrace();
                 }
             }
 
             @Override
             public void onFailure(Call call, IOException e) {
+                // TODO handle error with snackbar, provide retry action
                 e.printStackTrace();
             }
         });
     }
 
     @OnClick({ R.id.ivplay})
-
     public void playYoutube(){
         Intent i = new Intent(MovieDetailActivity.this, TrailerActivity.class);
         i.putExtra("movie", Parcels.wrap(movie));

@@ -3,7 +3,6 @@ package com.m3libea.flickster.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -32,9 +31,10 @@ public class MovieActivity extends AppCompatActivity {
 
     private MovieDBClient api;
 
-    ArrayList<Movie> movies;
-    MovieArrayAdapter movieAdapter;
     @BindView(R.id.lvmovies)ListView lvItems;
+
+    private ArrayList<Movie> movies;
+    private MovieArrayAdapter movieAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,13 +46,11 @@ public class MovieActivity extends AppCompatActivity {
 
         api = ((FlicksterApplication)this.getApplication()).getApi();
 
-        setElements();
-        apiRequest();
-        Log.d("Debug", movies.toString());
-
+        setupView();
+        fetchMovies();
     }
 
-    private void setElements() {
+    private void setupView() {
         ButterKnife.bind(this);
         movies = new ArrayList<>();
         movieAdapter = new MovieArrayAdapter(this, movies);
@@ -64,7 +62,7 @@ public class MovieActivity extends AppCompatActivity {
 
                 Movie m = movies.get(position);
 
-                Intent i = null;
+                Intent i;
                 if (m.getStars() > 5) {
                     i = new Intent(MovieActivity.this, TrailerActivity.class);
                     i.putExtra("play", true);
@@ -77,7 +75,7 @@ public class MovieActivity extends AppCompatActivity {
         });
     }
 
-    private void apiRequest() {
+    private void fetchMovies() {
         api.getNowPlaying(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -98,10 +96,8 @@ public class MovieActivity extends AppCompatActivity {
                             movieAdapter.notifyDataSetChanged();
                         }
                     });
-
                 } catch (JSONException e) {
                     e.printStackTrace();
-
                 }
             }
         });

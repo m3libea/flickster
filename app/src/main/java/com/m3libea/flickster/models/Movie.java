@@ -26,9 +26,10 @@ public class Movie {
     int ID;
 
 
-    public Movie(){
+    public Movie() {
 
     }
+
     public String getPosterPath() {
         return String.format("https://image.tmdb.org/t/p/w342/%s", posterPath);
     }
@@ -36,6 +37,7 @@ public class Movie {
     public String getReleaseDate() {
         return releaseDate;
     }
+
     public void setYoutubeKey(String youtubeKey) {
         this.youtubeKey = youtubeKey;
     }
@@ -55,11 +57,17 @@ public class Movie {
     public int getStars() {
         return stars;
     }
+
     public int getID() {
         return ID;
     }
+
     public String getYoutubeKey() {
         return youtubeKey;
+    }
+
+    public boolean isPopular() {
+        return getStars() > 5;
     }
 
     public Movie(JSONObject jsonObject) throws JSONException {
@@ -76,7 +84,7 @@ public class Movie {
     public static ArrayList<Movie> fromJSONArray(JSONArray array) {
         ArrayList<Movie> results = new ArrayList<>();
 
-        for(int i = 0; i < array.length(); i++) {
+        for (int i = 0; i < array.length(); i++) {
             try {
                 results.add(new Movie(array.getJSONObject(i)));
             } catch (JSONException e) {

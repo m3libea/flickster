@@ -1,9 +1,6 @@
 package com.m3libea.flickster.activities;
 
-import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.google.android.youtube.player.YouTubeBaseActivity;
@@ -28,13 +25,15 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-public class TrailerActivity extends YouTubeBaseActivity {
+public class TrailerActivity extends YouTubeBaseActivity implements YouTubePlayer.OnInitializedListener {
 
-    boolean play;
+    private FlicksterApplication app;
+    private MovieDBClient api;
 
     @BindView(R.id.player) YouTubePlayerView youTubePlayerView;
 
-    private MovieDBClient api;
+    private Movie movie;
+    boolean play;
 
 
     @Override
@@ -44,73 +43,13 @@ public class TrailerActivity extends YouTubeBaseActivity {
 
         ButterKnife.bind(this);
 
-        String youtubeApiKey;
-        final int movieId;
-        api = ((FlicksterApplication)this.getApplication()).getApi();
+        app = (FlicksterApplication)this.getApplication();
+        api = app.getApi();
 
+        movie = Parcels.unwrap(getIntent().getParcelableExtra("movie"));
+        play = getIntent().getBooleanExtra("play", false);
 
-
-        try {
-            ApplicationInfo ai = getPackageManager().getApplicationInfo(getPackageName(), PackageManager.GET_META_DATA);
-            Bundle bundle = ai.metaData;
-            youtubeApiKey = bundle.getString("YOUTUBE_API_KEY");
-
-            final Movie movie = Parcels.unwrap(getIntent().getParcelableExtra("movie"));
-
-
-            play = getIntent().getBooleanExtra("play", false);
-
-            youTubePlayerView.initialize(youtubeApiKey,
-                    new YouTubePlayer.OnInitializedListener() {
-                        @Override
-                        public void onInitializationSuccess(YouTubePlayer.Provider provider,
-                                                            final YouTubePlayer youTubePlayer, boolean b) {
-
-                            if (movie.getYoutubeKey() == null) {
-                                api.getTrailer(movie.getID(), new Callback() {
-                                    @Override
-                                    public void onResponse(Call call, final Response response) throws IOException {
-                                        JSONArray youtubeTrailerArray = null;
-
-                                        try {
-                                            String data = response.body().string();
-                                            JSONObject json = new JSONObject(data);
-                                            youtubeTrailerArray = json.getJSONArray("results");
-
-                                            if (youtubeTrailerArray.length() > 0) {
-                                                JSONObject trailer = (JSONObject) youtubeTrailerArray.get(0);
-                                                String key = trailer.getString("key");
-
-                                                insertKey(youTubePlayer, key, play);
-
-                                            }
-                                        } catch (JSONException e) {
-                                            e.printStackTrace();
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onFailure(Call call, IOException e) {
-                                        e.printStackTrace();
-                                    }
-                                });
-                            }else {
-                                insertKey(youTubePlayer,movie.getYoutubeKey(),play);
-                            }
-
-
-                        }
-
-                        @Override
-                        public void onInitializationFailure(YouTubePlayer.Provider provider,
-                                                            YouTubeInitializationResult youTubeInitializationResult) {
-                            Toast.makeText(TrailerActivity.this, "Youtube Failed!", Toast.LENGTH_SHORT).show();
-
-                        }
-                    });
-        } catch (PackageManager.NameNotFoundException e) {
-            Log.e("Trailer Activity", "Failed to load meta-data, NameNotFound: " + e.getMessage());
-        }
+        youTubePlayerView.initialize(app.getYoutubeApiKey(), this);
     }
 
     public void insertKey(YouTubePlayer youTubePlayer, String key, boolean play){
@@ -119,5 +58,47 @@ public class TrailerActivity extends YouTubeBaseActivity {
         } else {
             youTubePlayer.cueVideo(key);
         }
+    }
+
+    @Override
+    public void onInitializationSuccess(YouTubePlayer.Provider provider, final YouTubePlayer youTubePlayer, boolean b) {
+        if (movie.getYoutubeKey() == null) {
+            api.getTrailer(movie.getID(), new Callback() {
+                @Override
+                public void onResponse(Call call, final Response response) throws IOException {
+                    JSONArray youtubeTrailerArray = null;
+
+                    try {
+                        String data = response.body().string();
+                        JSONObject json = new JSONObject(data);
+                        youtubeTrailerArray = json.getJSONArray("results");
+
+                        if (youtubeTrailerArray.length() > 0) {
+                            JSONObject trailer = (JSONObject) youtubeTrailerArray.get(0);
+                            String key = trailer.getString("key");
+
+                            insertKey(youTubePlayer, key, play);
+
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    // TODO Snackbar with retry
+                    e.printStackTrace();
+                }
+            });
+        }else {
+            insertKey(youTubePlayer,movie.getYoutubeKey(),play);
+        }
+    }
+
+    @Override
+    public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
+        // TODO replace with Snackbar
+        Toast.makeText(TrailerActivity.this, "Youtube Failed!", Toast.LENGTH_SHORT).show();
     }
 }

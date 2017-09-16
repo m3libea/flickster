@@ -43,7 +43,7 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
 
     @Override
     public int getItemViewType(int position) {
-        return isPopular(getItem(position))? 0: 1;
+        return getItem(position).isPopular() ? 0 : 1;
     }
 
     @NonNull
@@ -66,37 +66,27 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
 
         int orientation = getContext().getResources().getConfiguration().orientation;
 
-        if(getItemViewType(position) == 1 || orientation == Configuration.ORIENTATION_LANDSCAPE){
+        if (getItemViewType(position) == 1 || orientation == Configuration.ORIENTATION_LANDSCAPE) {
             tvTitle.setText(movie.getOriginalTitle());
             tvOverview.setText(movie.getOverview());
         }
 
-        if (isPopular(movie)){
-            //Insert image
-            Picasso.with(getContext()).load(movie.getBackdropPath())
-                    .transform(new RoundedCornersTransformation(10, 10))
-                    .placeholder(R.drawable.syncph)
-                    .error(R.drawable.errorph)
-                    .into(ivImage);
-            //Insert play button
+        String backgroundImage;
+        if (movie.isPopular()) {
+            backgroundImage = movie.getBackdropPath();
             Picasso.with(getContext()).load(R.drawable.play)
                     .into(ivPlay);
-
-        }else{
-            Picasso.with(getContext()).load(movie.getPosterPath())
-                    .transform(new RoundedCornersTransformation(10, 10))
-                    .placeholder(R.drawable.syncph)
-                    .error(R.drawable.errorph)
-                    .into(ivImage);
+        } else {
+            backgroundImage = movie.getPosterPath();
         }
 
+        Picasso.with(getContext()).load(backgroundImage)
+                .transform(new RoundedCornersTransformation(10, 10))
+                .placeholder(R.drawable.syncph)
+                .error(R.drawable.errorph)
+                .into(ivImage);
 
         return convertView;
-
-    }
-
-    private boolean isPopular(Movie movie) {
-        return (movie.getStars() > 5);
     }
 
     private View getInflatedLayoutForType(int type) {

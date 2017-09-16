@@ -17,6 +17,5 @@
         android:id="@+id/lvmovies"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:background="@color/backgroundDark"/>
+        android:layout_alignParentStart="true"/>
 </RelativeLayout>

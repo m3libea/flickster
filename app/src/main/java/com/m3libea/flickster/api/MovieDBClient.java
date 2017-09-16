@@ -10,21 +10,19 @@ import okhttp3.Request;
 
 public class MovieDBClient {
 
+    private static final String BASE_URL = "https://api.themoviedb.org/3/";
     private String key;
-    private String baseURL = "https://api.themoviedb.org/3/";
 
     private OkHttpClient client;
 
-    public MovieDBClient(String key) {
+    public MovieDBClient(OkHttpClient client, String key) {
         this.key = key;
-        client = new OkHttpClient();
-
-
+        this.client = client;
     }
 
     public void getNowPlaying(Callback cb) {
 
-        String url = String.format("%smovie/now_playing?api_key=%s",baseURL, key);
+        String url = String.format("%smovie/now_playing?api_key=%s",BASE_URL, key);
         Request request = new Request.Builder()
                 .url(url)
                 .build();
@@ -33,7 +31,7 @@ public class MovieDBClient {
     }
 
     public void getTrailer(int movieID, Callback cb) {
-        String url = String.format("%smovie/%d/videos?api_key=%s", baseURL, movieID, key);
+        String url = String.format("%smovie/%d/videos?api_key=%s", BASE_URL, movieID, key);
         Request request = new Request.Builder()
                 .url(url)
                 .build();

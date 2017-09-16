@@ -8,6 +8,8 @@ import android.util.Log;
 
 import com.m3libea.flickster.api.MovieDBClient;
 
+import okhttp3.OkHttpClient;
+
 /**
  * Created by m3libea on 9/13/17.
  */
@@ -16,13 +18,18 @@ public class FlicksterApplication extends Application {
 
     public static String TAG = "FlicksterApplication";
 
-    public MovieDBClient api;
+    private OkHttpClient httpClient;
+    private MovieDBClient api;
 
     public static String youtubeApiKey;
     public static String movieDBApiKey;
 
     public MovieDBClient getApi() {
         return api;
+    }
+
+    public String getYoutubeApiKey() {
+        return youtubeApiKey;
     }
 
     @Override
@@ -41,7 +48,8 @@ public class FlicksterApplication extends Application {
             Log.e(TAG, "Failed to load meta-data, NullPointer: " + e.getMessage());
         }
 
-        api = new MovieDBClient(movieDBApiKey);
+        httpClient = new OkHttpClient();
+        api = new MovieDBClient(httpClient, movieDBApiKey);
 
     }
 }
