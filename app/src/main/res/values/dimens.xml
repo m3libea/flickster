@@ -5,5 +5,7 @@
     <dimen name="play_button_size">75dp</dimen>
     <dimen name="maxheight">210dp</dimen>
     <dimen name="margin10">10dp</dimen>
+    <dimen name="padding10">10dp</dimen>
+
 
 </resources>
