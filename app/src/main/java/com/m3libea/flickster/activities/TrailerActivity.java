@@ -1,6 +1,8 @@
 package com.m3libea.flickster.activities;
 
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
+import android.view.View;
 import android.widget.Toast;
 
 import com.google.android.youtube.player.YouTubeBaseActivity;
@@ -61,7 +63,11 @@ public class TrailerActivity extends YouTubeBaseActivity implements YouTubePlaye
     }
 
     @Override
-    public void onInitializationSuccess(YouTubePlayer.Provider provider, final YouTubePlayer youTubePlayer, boolean b) {
+    public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
+        fetchTrailer(youTubePlayer);
+    }
+
+    public void fetchTrailer(final YouTubePlayer youTubePlayer) {
         if (movie.getYoutubeKey() == null) {
             api.getTrailer(movie.getID(), new Callback() {
                 @Override
@@ -87,7 +93,14 @@ public class TrailerActivity extends YouTubeBaseActivity implements YouTubePlaye
 
                 @Override
                 public void onFailure(Call call, IOException e) {
-                    // TODO Snackbar with retry
+                    Snackbar bar = Snackbar.make(findViewById(R.id.activity_trailer), R.string.connection_error, Snackbar.LENGTH_LONG)
+                            .setAction("Retry", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    fetchTrailer(youTubePlayer);
+                                }
+                            });
+                    bar.show();
                     e.printStackTrace();
                 }
             });

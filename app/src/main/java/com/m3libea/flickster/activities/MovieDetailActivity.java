@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -79,6 +80,7 @@ public class MovieDetailActivity extends AppCompatActivity {
 
         Picasso.with(MovieDetailActivity.this).load(R.drawable.play)
                 .into(ivPlay);
+
     }
 
     private void fetchTrailer(){
@@ -106,14 +108,27 @@ public class MovieDetailActivity extends AppCompatActivity {
                         }
                     });
                 } catch (JSONException e) {
-                    // TODO handle error with snackbar
+                    Snackbar bar = Snackbar.make(findViewById(R.id.activity_detailed_movie), R.string.parser_Error, Snackbar.LENGTH_LONG)
+                            .setAction("Dismiss", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                }
+                            });
+                    bar.show();
                     e.printStackTrace();
                 }
             }
 
             @Override
             public void onFailure(Call call, IOException e) {
-                // TODO handle error with snackbar, provide retry action
+                Snackbar bar = Snackbar.make(findViewById(R.id.activity_detailed_movie), R.string.connection_error, Snackbar.LENGTH_LONG)
+                        .setAction("Retry", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                fetchTrailer();
+                            }
+                        });
+                bar.show();
                 e.printStackTrace();
             }
         });

@@ -2,6 +2,7 @@ package com.m3libea.flickster.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -79,6 +80,14 @@ public class MovieActivity extends AppCompatActivity {
         api.getNowPlaying(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
+                Snackbar bar = Snackbar.make(findViewById(R.id.activity_movie), R.string.connection_error, Snackbar.LENGTH_INDEFINITE)
+                        .setAction("Retry", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                fetchMovies();
+                            }
+                        });
+                bar.show();
                 e.printStackTrace();
             }
 

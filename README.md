@@ -2,7 +2,7 @@
 
 Flickster shows the latest movies currently playing in theaters. The app utilizes the Movie Database API to display images and basic information about these movies to the user.
 
-Time spent: **16** hours spent in total
+Time spent: **22** hours spent in total
 
 ## User Stories
 
@@ -22,7 +22,9 @@ The following **optional** features are implemented:
   * [X] Personalized icon for application
   * [X] Action Bar using app icon
   * [X] Gradient as background
-  * [X] Movie title on the action bar for each detailed view 
+  * [X] Movie title on the action bar for each detailed view
+  * [X] Different landscape view for detailed view.
+  * [X] Error handling using Snackbar
 
 The following **bonus** features are implemented:
 
@@ -45,8 +47,8 @@ The following **additional** features are implemented:
 
 Here's a walkthrough of implemented user stories:
 
-<img src='http://i.imgur.com/GydPl5t.gif' title='Video Walkthrough' width='' alt='Video Walkthrough - Portrait' />
-<img src='http://i.imgur.com/0NLxaxD.gif' title='Video Walkthrough' width='' alt='Video Walkthrough - Landscape'/>
+<img src='https://i.imgur.com/xubsnbN.gif' title='Video Walkthrough' width='' alt='Video Walkthrough - Portrait' />
+<img src='https://i.imgur.com/jdJ229j.gif' title='Video Walkthrough' width='' alt='Video Walkthrough - Landscape'/>
 
 ## Open-source libraries used
 
