@@ -47,7 +47,7 @@ The following **additional** features are implemented:
 
 Here's a walkthrough of implemented user stories:
 
-<img src='https://i.imgur.com/xubsnbN.gif' title='Video Walkthrough' width='' alt='Video Walkthrough - Portrait' />
+<img src='https://i.imgur.com/9X2bFPC.gif' title='Video Walkthrough' width='' alt='Video Walkthrough - Portrait' />
 <img src='https://i.imgur.com/jdJ229j.gif' title='Video Walkthrough' width='' alt='Video Walkthrough - Landscape'/>
 
 ## Open-source libraries used
